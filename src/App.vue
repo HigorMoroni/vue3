@@ -1,33 +1,44 @@
 <template>
+  <AppHook v-if="showAppHook" />
+
+  <button @click="showAppHook = !showAppHook" >Toggle</button>
+
+  <br><br><br>
   {{fullName}}
+  <br><br><br>
   <img @click="changeName" alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppHook from './components/AppHook.vue';
+
 import { ref } from '@vue/reactivity';
 import { computed, watch } from '@vue/runtime-core';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-  },
+    AppHook
+},
   setup() {
     //DATA
     const user = ref({
       first_name: 'Jon',
       last_name: 'Snow'
     });
+
+    const showAppHook = ref(true);
+   
     
     //COMPUTED
     const fullName = computed(() => `${user.value.first_name} ${user.value.last_name}`);
+
 
     //METHOD
     const changeName = () => {
       user.value.first_name = 'Sansa';
     };
+
 
     //WATCH
     watch(user, () => {
@@ -40,11 +51,13 @@ export default {
       console.log('alterou o first name dentro do objeto user')
     });
 
+
     //RETURN
     return {
       user,
       changeName,
-      fullName
+      fullName,
+      showAppHook
     }
   }
 }
