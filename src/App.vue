@@ -1,4 +1,8 @@
 <template>
+  <AppButton @update="getUpdate">Save</AppButton>
+
+  <br><br><br>
+
   <AppHook v-if="showAppHook" />
 
   <button @click="showAppHook = !showAppHook" >Toggle</button>
@@ -11,15 +15,19 @@
 
 <script>
 import AppHook from './components/AppHook.vue';
+import AppButton from './components/AppButton.vue';
 
 import { ref } from '@vue/reactivity';
 import { computed, watch } from '@vue/runtime-core';
 
 export default {
   name: 'App',
+
   components: {
-    AppHook
-},
+    AppHook,
+    AppButton
+  },
+
   setup() {
     //DATA
     const user = ref({
@@ -38,6 +46,10 @@ export default {
     const changeName = () => {
       user.value.first_name = 'Sansa';
     };
+    
+    const getUpdate = data => {
+      console.log('getUpdate', data);
+    }
 
 
     //WATCH
@@ -57,7 +69,8 @@ export default {
       user,
       changeName,
       fullName,
-      showAppHook
+      showAppHook,
+      getUpdate
     }
   }
 }
